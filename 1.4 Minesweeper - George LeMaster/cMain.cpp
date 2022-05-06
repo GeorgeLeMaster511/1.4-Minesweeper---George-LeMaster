@@ -6,15 +6,24 @@ wxEND_EVENT_TABLE()
 
 cMain::cMain() : wxFrame(nullptr, wxID_ANY, "George LeMaster - Minesweeper", wxPoint(30,30), wxSize(500, 500))
 {
-	m_btn1 = new wxButton(this, 2006, "Click Me", wxPoint(15,15), wxSize(150,50));
-	m_txt1 = new wxTextCtrl(this, wxID_ANY, "", wxPoint(15, 70), wxSize(300, 30));
-	m_list1 = new wxListBox(this, wxID_ANY, wxPoint(15, 110), wxSize(300, 300));
+	btns = new wxButton* [nFieldWidth * nFieldHeight];
+	wxGridSizer* grid = new wxGridSizer(nFieldWidth, nFieldHeight, 0, 0);
 
+	for (int x = 0; x < nFieldWidth; x++)
+	{
+		for (int y = 0; y < nFieldHeight; y++)
+		{
+			btns[y * nFieldWidth + x] = new wxButton(this, 10000 + (y * nFieldWidth + x));
+			grid->Add(btns[y * nFieldWidth + x], 1, wxEXPAND | wxALL);
+		}
+	}
 
+	this->SetSizer(grid);
+	grid->Layout();
 }
 
 void cMain::OnButtonClicked(wxCommandEvent& evt)
 {
-	m_list1->AppendString(m_txt1->GetValue());
+		
 	evt.Skip();
 }
